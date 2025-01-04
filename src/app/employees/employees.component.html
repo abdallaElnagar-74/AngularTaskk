@@ -11,7 +11,7 @@
         Add New Employee
       </button>
       <div class="card mt-2 py-3 shadow" *ngFor="let item of filteredData ; let i = index">
-        <button class="btn d-block ms-auto mt-0 me-2" (click)="onDelete(item.name,item.id,i)"><i class="fa-solid fa-x text-danger"></i></button>
+        <button class="btn d-block ms-auto mt-0 me-2" (click)="onDelete(item.id,i)"><i class="fa-solid fa-x text-danger"></i></button>
         <div class="w-25 mx-auto">
           <img
             [src]="

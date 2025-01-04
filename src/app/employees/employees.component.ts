@@ -152,7 +152,7 @@ export class EmployeesComponent {
     },
   ];
   addEmployeeForm: FormGroup = this._FormBuilder.group({
-    id: [this.employees.length + 1],
+    id: [Number('')],
     deptId: [Number(this._ActivatedRoute.snapshot.paramMap.get('id'))],
     name: ['', [Validators.required]],
     age: ['', [Validators.required]],
@@ -161,17 +161,20 @@ export class EmployeesComponent {
   filteredData: Employees[] = [];
   departId: any;
   deptName: any;
+
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _FormBuilder: FormBuilder,
     private _ToastrService: ToastrService
   ) {}
+
   ngOnInit(): void {
     this.departId = this._ActivatedRoute.snapshot.paramMap.get('id');
     this.deptName = this._ActivatedRoute.snapshot.paramMap.get('name');
     this.filterData();
     this.getData();
   }
+
   filterData(): void {
     let employees: any = localStorage.getItem('employees');
     let data: Employees[] = JSON.parse(employees);
@@ -182,8 +185,11 @@ export class EmployeesComponent {
     }
     console.log(this.filteredData);
   }
+
   addEmployee(): void {
     if (this.addEmployeeForm.valid) {
+      let dateNow = new Date()
+      this.addEmployeeForm.value.id= dateNow.getTime();
       console.log('Added', this.addEmployeeForm.value);
       this.employees.push(this.addEmployeeForm.value);
       this.filteredData.push(this.addEmployeeForm.value);
@@ -196,10 +202,13 @@ export class EmployeesComponent {
       this.failMessege();
     }
   }
+
   getData(): void {
     let data: any = localStorage.getItem('employees');
     this.employees = JSON.parse(data);
+    
   }
+
   isInvalidInput(value: string): boolean | undefined {
     const nameControl = this.addEmployeeForm.get(value);
     return (
@@ -208,15 +217,17 @@ export class EmployeesComponent {
       nameControl?.touched
     );
   }
+
   successMessege(): void {
     this._ToastrService.success('Employee Added Successfully');
   }
   failMessege(): void {
     this._ToastrService.error('All Inputs are required');
   }
-  onDelete(name: string, id: number, filterIndex: number): void {
+  
+  onDelete( id: number, filterIndex: number): void {
     let result = this.employees.findIndex(
-      (item) => item.id == id && item.name == name
+      (item) => item.id == id 
     );
     this.employees.splice(result, 1);
     this.filteredData.splice(filterIndex, 1);
