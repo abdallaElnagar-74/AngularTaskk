@@ -1,0 +1,14 @@
+section{
+    background-color: rgb(249,250,251);
+    min-height: 100vh;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.card{
+    transition: transform .4s;
+    &:hover{
+        transform: scale(1.05);
+        z-index: 99999;
+    }
+}

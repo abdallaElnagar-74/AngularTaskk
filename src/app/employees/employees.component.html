@@ -1,0 +1,124 @@
+<section class="container-fluid">
+  <div class="row justify-content-center">
+    <h1 class="text-center mt-3 text-primary fw-bold">{{deptName}}</h1>
+    <div class="col-md-4 my-5">
+      <button class="btn bg-primary text-white" routerLink=""><i class="fa-solid fa-arrow-left"></i></button>
+      <button
+        class="btn btn-success d-block mx-auto"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+      >
+        Add New Employee
+      </button>
+      <div class="card mt-2 py-3 shadow" *ngFor="let item of filteredData ; let i = index">
+        <button class="btn d-block ms-auto mt-0 me-2" (click)="onDelete(item.name,item.id,i)"><i class="fa-solid fa-x text-danger"></i></button>
+        <div class="w-25 mx-auto">
+          <img
+            [src]="
+              item.gender.toLowerCase() == 'male'
+                ? './assets/images/male.jpg'
+                : './assets/images/female.png'
+            "
+            class="card-img-top w-100"
+            alt="..."
+          />
+        </div>
+        <div class="card-body cursor-pointer">
+          <h5 class="card-title fw-semibold">
+            Name : <span class="text-secondary">{{ item.name }}</span>
+          </h5>
+          <h5 class="card-title fw-semibold">
+            Age : <span class="text-secondary">{{ item.age }}</span>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Add New Employee
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            action=""
+            [formGroup]="addEmployeeForm"
+            (ngSubmit)="addEmployee()"
+          >
+            <label for="name">Name :</label>
+            <input
+              formControlName="name"
+              type="text"
+              id="name"
+              class="form-control"
+            />
+            <p class="text-danger" *ngIf="isInvalidInput('name')">
+              Name Is Required
+            </p>
+            <label for="age">Age :</label>
+            <input
+              formControlName="age"
+              id="age"
+              type="number"
+              class="form-control"
+            />
+            <p class="text-danger" *ngIf="isInvalidInput('age')">
+              Age Is Required
+            </p>
+            <label for="gender" for="">Gender :</label>
+            <input
+              formControlName="gender"
+              #gender
+              type="text"
+              id="gender"
+              class="form-control"
+            />
+            <p class="text-danger" *ngIf="isInvalidInput('gender')">
+              Gender Is Required
+            </p>
+            <p
+              class="text-danger"
+              *ngIf="addEmployeeForm.get('gender')?.hasError('pattern')"
+            >
+              Male of Female Only
+            </p>
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="data-bs-dismiss"
+              >
+                Close
+              </button>
+              &nbsp;
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="data-bs-dismiss"
+              >
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

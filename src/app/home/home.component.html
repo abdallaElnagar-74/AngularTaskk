@@ -1,0 +1,16 @@
+<section class="container-fluid">
+    <h1 class="text-center mt-2 fw-semibold">Technical and Development Departments</h1>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4 mb-5">
+            <div class="card mb-2 shadow cursor-pointer" *ngFor="let item of departments">
+                <div class="card-body">
+                  <h2 class="card-title text-center mb-4 h4 fw-semibold">{{item.deptName}} <i [class]="item.icon"></i></h2>
+                  <ul *ngFor="let detail of item.details">
+                    <li class="fw-semibold text-secondary">{{detail}}</li>
+                  </ul>
+                  <button href="#" class="btn btn-primary d-block mx-auto mt-3" (click)="navigateToEmployee(item.id,item.deptName)">See Details</button>
+                </div>
+              </div>
+        </div>
+    </div>
+</section>
