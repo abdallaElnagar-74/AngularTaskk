@@ -153,7 +153,7 @@ export class EmployeesComponent {
   // ];
   employees :Employees[]=[]
   addEmployeeForm: FormGroup = this._FormBuilder.group({
-    id: [Number('')],
+    id: [],
     deptId: [Number(this._ActivatedRoute.snapshot.paramMap.get('id'))],
     name: ['', [Validators.required]],
     age: ['', [Validators.required]],
@@ -181,7 +181,7 @@ export class EmployeesComponent {
   filterData(): void {
     let employees: any = localStorage.getItem('employees');
     let data: Employees[] = JSON.parse(employees);
-    for (let index = 0; index < data.length; index++) {
+    for (let index = 0; index < data?.length; index++) {
       if (data[index].deptId == this.departId) {
         this.filteredData.push(data[index]);
       }
@@ -190,24 +190,32 @@ export class EmployeesComponent {
   }
 
   addEmployee(): void {
-    if (this.addEmployeeForm.valid) {
-      let dateNow = new Date()
-      this.addEmployeeForm.value.id= dateNow.getTime();
-      this.employees.push(this.addEmployeeForm.value);
+    let newEmp = this.addEmployeeForm.value
+    let dateNow = new Date()
+    this.addEmployeeForm.value.id= dateNow.getTime();
+    if (!this.addEmployeeForm.invalid) { 
+      console.log(this.addEmployeeForm.value);
+      console.log(this.employees);
+      this.employees.push(newEmp)
+      localStorage.setItem('employees', JSON.stringify(this.employees));
       this.filteredData.push(this.addEmployeeForm.value);
       console.log(this.employees);
       console.log(this.filteredData);
-      localStorage.setItem('employees', JSON.stringify(this.employees));
       this.addEmployeeForm.reset();
       this.successMessege();
-    } else {
+    }
+    
+    else {
       this.failMessege();
     }
+    console.log(this.employees);
+    console.log(this.filteredData);
+    
   }
 
   getData(): void {
     let data: any = localStorage.getItem('employees');
-    this.employees = JSON.parse(data);
+    this.employees = JSON.parse(data)||[];
     
   }
 
