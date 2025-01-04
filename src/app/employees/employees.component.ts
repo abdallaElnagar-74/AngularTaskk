@@ -174,6 +174,7 @@ export class EmployeesComponent {
     this.deptName = this._ActivatedRoute.snapshot.paramMap.get('name');
     this.filterData();
   }
+
   filterData(): void {
     let employees: any = localStorage.getItem('employees');
     let data: Employees[] = JSON.parse(employees);
