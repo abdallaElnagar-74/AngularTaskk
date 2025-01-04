@@ -169,7 +169,6 @@ export class EmployeesComponent {
   ) {}
 
   ngOnInit(): void {
-    localStorage.setItem('employees', JSON.stringify(this.employees));
     this.getData();
     this.departId = this._ActivatedRoute.snapshot.paramMap.get('id');
     this.deptName = this._ActivatedRoute.snapshot.paramMap.get('name');
@@ -191,7 +190,6 @@ export class EmployeesComponent {
     if (this.addEmployeeForm.valid) {
       let dateNow = new Date()
       this.addEmployeeForm.value.id= dateNow.getTime();
-      console.log('Added', this.addEmployeeForm.value);
       this.employees.push(this.addEmployeeForm.value);
       this.filteredData.push(this.addEmployeeForm.value);
       console.log(this.employees);
