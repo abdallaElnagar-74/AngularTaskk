@@ -169,10 +169,11 @@ export class EmployeesComponent {
   ) {}
 
   ngOnInit(): void {
+    localStorage.setItem('employees', JSON.stringify(this.employees));
+    this.getData();
     this.departId = this._ActivatedRoute.snapshot.paramMap.get('id');
     this.deptName = this._ActivatedRoute.snapshot.paramMap.get('name');
     this.filterData();
-    this.getData();
   }
 
   filterData(): void {
